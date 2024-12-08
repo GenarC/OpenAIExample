@@ -12,6 +12,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 
     defaultConfig {
@@ -28,7 +29,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "OPENAI_SECRET_KEY", rootProject.ext.openaiSecretKey
+            buildConfigField "String", "OPENAI_BASE_URL", "\"https://api.openai.com/v1/\""
         }
+
+        debug {
+            debuggable true
+            buildConfigField "String", "OPENAI_SECRET_KEY", rootProject.ext.openaiSecretKey
+            buildConfigField "String", "OPENAI_BASE_URL", "\"https://api.openai.com/v1/\""
+        }
+
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,6 +59,8 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson.converter)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging.interceptor)
     implementation(libs.gson)
     implementation(libs.hilt.android)
     implementation libs.androidx.activity

@@ -9,3 +9,20 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     id 'com.google.dagger.hilt.android' version '2.51.1' apply false
 }
+
+ext {
+    openaiSecretKey = getBuildProperty("openai_secret_key", "OPENAI_SECRET_KEY")
+}
+
+def getBuildProperty(String localProperty, String repositoryVariable, String orDefault = "undefined"){
+    return getLocalProperty(localProperty) ?: System.getenv(repositoryVariable) ?: orDefault
+}
+
+def getLocalProperty(String key){
+    Properties localProperties = new Properties()
+    if(project.rootProject.file("local.properties").exists()){
+        localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
+    }
+    return localProperties[key]
+}
+

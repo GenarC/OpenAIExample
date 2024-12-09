@@ -21,7 +21,7 @@ class OpenAiRepository @Inject constructor(
     }
 
     companion object{
-        var MODEL = "gpt-3.5-turbo"
+        var MODEL = "chatgpt-4o-latest"
         var ROLE = "user"
     }
 }
